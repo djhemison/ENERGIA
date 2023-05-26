@@ -111,8 +111,8 @@ public class PrincipalForm extends javax.swing.JFrame {
 
     private void jMIClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIClientesActionPerformed
         // TODO add your handling code here:
-        ListaClientes listaCliente = new ListaClientes();
-        listaCliente.setVisible(true);
+        ConsumoForm consumo = new ConsumoForm(this);
+        consumo.setVisible(true);
     }//GEN-LAST:event_jMIClientesActionPerformed
 
     private void jMIUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIUsuariosActionPerformed

@@ -40,7 +40,6 @@ public class ClienteDAO {
         ps.executeUpdate();
         ps.close();
         conexao.close();
-
     }
 
     public void alterar(Cliente cliente) throws SQLException {
@@ -64,7 +63,19 @@ public class ClienteDAO {
         ResultSet result = ps.executeQuery();
         Cliente cliente = null;
         while (result.next()) {
-            cliente = new Cliente(result.getString("nome"), result.getString("sexo"), result.getString("endereco"), result.getInt("cep"), result.getString("bairro"), result.getInt("cpf"), result.getString("nascimento"), result.getString("vencimento"), result.getString("unidade"), result.getString("email"), result.getInt("kwh"), result.getInt("valortotal"), result.getString("site"));
+            cliente = new Cliente(result.getString("nome"),
+                    result.getString("sexo"),
+                    result.getString("endereco"),
+                    result.getInt("cep"),
+                    result.getString("bairro"),
+                    result.getInt("cpf"),
+                    result.getString("nascimento"),
+                    result.getString("vencimento"),
+                    result.getString("unidade"),
+                    result.getString("email"),
+                    result.getInt("kwh"),
+                    result.getInt("valortotal"),
+                    result.getString("site"));
             cliente.setId(result.getInt("id"));
             clientes.add(cliente);
         }

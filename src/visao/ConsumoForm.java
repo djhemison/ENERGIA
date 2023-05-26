@@ -5,12 +5,14 @@
 package visao;
 
 import dao.ClienteDAO;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
-import modelo.Pessoa;
 
 /**
  *
@@ -18,14 +20,19 @@ import modelo.Pessoa;
  */
 public class ConsumoForm extends javax.swing.JFrame {
 
+    PrincipalForm princ;
     private ClienteDAO clientedao = new ClienteDAO();
+    private List<Cliente> clientes;
     int i = 0;
+    private Cliente clienteselecionado;
 
     /**
      * Creates new form consumo_energia
      */
-    public ConsumoForm() {
+    public ConsumoForm(PrincipalForm prin) {
+        princ = prin;
         initComponents();
+        atualizarTabela();
     }
 
     /**
@@ -37,7 +44,7 @@ public class ConsumoForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -62,179 +69,243 @@ public class ConsumoForm extends javax.swing.JFrame {
         jtfEmail = new javax.swing.JTextField();
         jtfKwh = new javax.swing.JTextField();
         cbSexo = new javax.swing.JComboBox<>();
-        btnCadastrar = new javax.swing.JButton();
-        btnGerarNota2 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jtfSite = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField5 = new javax.swing.JTextField();
+        jButton11 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTListaClientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setText("CADASTRO");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 6, -1, -1));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Valor total:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 506, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel3.setText("Nome:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 66, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel4.setText("Sexo:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 106, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setText("Endereço:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 146, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel6.setText("CEP:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 186, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel7.setText("Bairro:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 226, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel8.setText("CPF:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 266, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel9.setText("Nascimento:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 306, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel10.setText("Data Vencimento:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 346, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel11.setText("Unidade Consumidora:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 386, -1, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel12.setText("Email:");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 426, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel13.setText("Kwh:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 466, -1, -1));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, -1, -1));
 
         jtfValorTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfValorTotalActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 506, 320, 30));
+        jPanel1.add(jtfValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, 230, 30));
 
         jtfNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfNomeActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 66, 320, 30));
+        jPanel1.add(jtfNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 270, 30));
 
         jtfEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfEnderecoActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 146, 320, 30));
+        jPanel1.add(jtfEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 240, 30));
 
         jtfCep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfCepActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 186, 320, 30));
+        jPanel1.add(jtfCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 300, 30));
 
         jtfBairro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfBairroActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 226, 320, 30));
+        jPanel1.add(jtfBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 270, 30));
 
         jtfCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfCpfActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 266, 320, 30));
+        jPanel1.add(jtfCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 290, 30));
 
         jtfNascimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfNascimentoActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 306, 320, 30));
+        jPanel1.add(jtfNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 210, 30));
 
         jtfVencimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfVencimentoActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 346, 320, 30));
+        jPanel1.add(jtfVencimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 150, 30));
 
         jtfUnidadeConsumidora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfUnidadeConsumidoraActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfUnidadeConsumidora, new org.netbeans.lib.awtextra.AbsoluteConstraints(266, 386, 320, 30));
+        jPanel1.add(jtfUnidadeConsumidora, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 100, 30));
 
         jtfEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfEmailActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 426, 320, 30));
+        jPanel1.add(jtfEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 280, 30));
 
         jtfKwh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfKwhActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfKwh, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 466, 320, 30));
+        jPanel1.add(jtfKwh, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 290, 30));
 
-        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PREFIRO NÃO DIZER", "MASCULINO", "FEMININO" }));
+        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
         cbSexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbSexoActionPerformed(evt);
             }
         });
-        getContentPane().add(cbSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 106, 260, 30));
-
-        btnCadastrar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btnCadastrar.setText("Cadastrar");
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 590, 190, -1));
-
-        btnGerarNota2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        btnGerarNota2.setText("Gerar Nota");
-        btnGerarNota2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGerarNota2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnGerarNota2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 590, 190, -1));
+        jPanel1.add(cbSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 280, 30));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel14.setText("Site:");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, -1, -1));
 
         jtfSite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfSiteActionPerformed(evt);
             }
         });
-        getContentPane().add(jtfSite, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 550, 320, 30));
+        jPanel1.add(jtfSite, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 300, 30));
+
+        jButton1.setBackground(new java.awt.Color(255, 0, 0));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Excluir");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 580, 90, 45));
+
+        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jButton7.setText("Cancelar");
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, 100, 45));
+
+        jButton3.setBackground(new java.awt.Color(0, 0, 0));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Alterar");
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 580, 90, 45));
+
+        jButton4.setBackground(new java.awt.Color(0, 204, 255));
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setText("Salvar");
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 80, 45));
+
+        jButton2.setBackground(new java.awt.Color(0, 153, 0));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Cadastrar");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 580, -1, 45));
+
+        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Prioridade", "Responsavel" }));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 144, 40));
+
+        jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, 340, 40));
+
+        jButton11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButton11.setText("Pesquisar");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 30, 100, 40));
+
+        jTListaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Nome", "CPF", "Endereco"
+            }
+        ));
+        jScrollPane1.setViewportView(jTListaClientes);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 620, 470));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 650));
 
         pack();
         setLocationRelativeTo(null);
@@ -288,52 +359,65 @@ public class ConsumoForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbSexoActionPerformed
 
-    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
-
-        String nome = jtfNome.getText();
-        String sexo = (String) cbSexo.getSelectedItem();
-        String endereco = jtfEndereco.getText();
-        int cep =Integer.parseInt(jtfCep.getText());
-        String bairro = jtfBairro.getText();
-        int cpf =Integer.parseInt( jtfCpf.getText());
-        String nascimento = jtfNascimento.getText();
-        String vencimento = jtfVencimento.getText();
-        String unidade = jtfUnidadeConsumidora.getText();
-        String email = jtfEmail.getText();
-        int kwh = Integer.parseInt(jtfKwh.getText());
-        int valortotal = Integer.parseInt(jtfValorTotal.getText());
-        String site = jtfSite.getText();
-        
-        Cliente cliente = new Cliente(nome, sexo, endereco, cep, bairro, cpf, nascimento, vencimento, unidade, email, kwh, valortotal, site);
-        try {
-            clientedao.adicionar(cliente);
-            JOptionPane.showMessageDialog(null, "Pessoa Cadastrada");
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro na hora de inserir os dados", "Erro", JOptionPane.ERROR_MESSAGE);
-
-        }
-    }//GEN-LAST:event_btnCadastrarActionPerformed
-
-    private void btnGerarNota2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarNota2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGerarNota2ActionPerformed
-
     private void jtfSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSiteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfSiteActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+
+        princ.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int linha = jTListaClientes.getSelectedRow();
+        if (linha < 0) {
+            JOptionPane.showMessageDialog(null, "Selecione uma pessoa", "Atenção", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        clienteselecionado = clientes.get(linha);
+        try {
+            clientedao.remover(clienteselecionado.getId());
+            JOptionPane.showMessageDialog(null, "Pessoa excluída");
+            atualizarTabela();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-
+    private void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) jTListaClientes.getModel();
+        model.setNumRows(0);
+        jTListaClientes.setModel(model);
+        jTListaClientes.setDefaultEditor(Object.class, null);
+        ArrayList<Cliente> cliente = new ArrayList<>();
+        try {
+            cliente = clientedao.listarClientes();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsumoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (Cliente cliente1 : cliente) {
+            model.addRow(new Object[]{cliente1.getNome(), cliente1.getCpf(), cliente1.getEndereco()});
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnGerarNota2;
     private javax.swing.JComboBox<String> cbSexo;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -347,6 +431,10 @@ public class ConsumoForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTListaClientes;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jtfBairro;
     private javax.swing.JTextField jtfCep;
     private javax.swing.JTextField jtfCpf;
