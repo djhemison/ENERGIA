@@ -32,7 +32,6 @@ public class ConsumoForm extends javax.swing.JFrame {
     public ConsumoForm(PrincipalForm prin) {
         princ = prin;
         initComponents();
-        atualizarTabela();
     }
 
     /**
@@ -68,7 +67,7 @@ public class ConsumoForm extends javax.swing.JFrame {
         jtfUnidadeConsumidora = new javax.swing.JTextField();
         jtfEmail = new javax.swing.JTextField();
         jtfKwh = new javax.swing.JTextField();
-        cbSexo = new javax.swing.JComboBox<>();
+        jCBSexo = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jtfSite = new javax.swing.JTextField();
         jBExcluir = new javax.swing.JButton();
@@ -212,24 +211,24 @@ public class ConsumoForm extends javax.swing.JFrame {
         });
         jPanel1.add(jtfKwh, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 290, 30));
 
-        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
-        cbSexo.addActionListener(new java.awt.event.ActionListener() {
+        jCBSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
+        jCBSexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbSexoActionPerformed(evt);
+                jCBSexoActionPerformed(evt);
             }
         });
-        jPanel1.add(cbSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 280, 30));
+        jPanel1.add(jCBSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 280, 30));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel14.setText("Site:");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, -1, -1));
 
         jtfSite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfSiteActionPerformed(evt);
             }
         });
-        jPanel1.add(jtfSite, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 300, 30));
+        jPanel1.add(jtfSite, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, 300, 30));
 
         jBExcluir.setBackground(new java.awt.Color(255, 0, 0));
         jBExcluir.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -258,6 +257,11 @@ public class ConsumoForm extends javax.swing.JFrame {
         jBAlterar.setForeground(new java.awt.Color(255, 255, 255));
         jBAlterar.setText("Alterar");
         jBAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAlterarActionPerformed(evt);
+            }
+        });
         jPanel1.add(jBAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 580, 90, 45));
 
         jBSalvar.setBackground(new java.awt.Color(0, 204, 255));
@@ -265,6 +269,11 @@ public class ConsumoForm extends javax.swing.JFrame {
         jBSalvar.setForeground(new java.awt.Color(255, 255, 255));
         jBSalvar.setText("Salvar");
         jBSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalvarActionPerformed(evt);
+            }
+        });
         jPanel1.add(jBSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 80, 45));
 
         jBCadastrar.setBackground(new java.awt.Color(0, 153, 0));
@@ -275,7 +284,7 @@ public class ConsumoForm extends javax.swing.JFrame {
         jPanel1.add(jBCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 580, -1, 45));
 
         jCBTermo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBTermo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Endereco", "Bairro" }));
+        jCBTermo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "CPF", "Endereco" }));
         jPanel1.add(jCBTermo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 144, 40));
 
         jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -355,9 +364,9 @@ public class ConsumoForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfKwhActionPerformed
 
-    private void cbSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSexoActionPerformed
+    private void jCBSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSexoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbSexoActionPerformed
+    }//GEN-LAST:event_jCBSexoActionPerformed
 
     private void jtfSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSiteActionPerformed
         // TODO add your handling code here:
@@ -391,34 +400,56 @@ public class ConsumoForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBExcluirActionPerformed
 
+    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jBAlterarActionPerformed
+
+    private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+        // TODO add your handling code here:
+        String nome = jtfNome.getText();
+        String sexo = jCBSexo.getSelectedItem().toString();
+        String endereco = jtfEndereco.getText();
+        String cep = jtfEndereco.getText();
+        String bairro = jtfEndereco.getText();
+        String cpf = jtfEndereco.getText();
+        String nascimento = jtfEndereco.getText();
+        String vencimento = jtfEndereco.getText();
+        String unidade = jtfEndereco.getText();
+        String email = jtfEndereco.getText();
+        String kwh = jtfEndereco.getText();
+        String valorTotal = jtfEndereco.getText();
+        String site = jtfEndereco.getText();
+        
+    }//GEN-LAST:event_jBSalvarActionPerformed
+
     /**
      * @param args the command line arguments
      */
     private void atualizarTabela() {
-        String termo = (String) jCBTermo.getSelectedItem();
         DefaultTableModel model = (DefaultTableModel) jTListaClientes.getModel();
         model.setNumRows(0);
-        jTListaClientes.setModel(model);
-        jTListaClientes.setDefaultEditor(Object.class, null);
-        
+
         try {
-            clientes = clientedao.pesquisarClientes(termo.toLowerCase(),jTFPesquisa.getText());
+            clientes = clientedao.pesquisarClientes(jCBTermo.getSelectedItem().toString().toLowerCase(), jTFPesquisa.getText());
+            for (int i = 0; i < clientes.size(); i++) {
+                Cliente cli = clientes.get(i);
+                model.addRow(new Object[]{cli.getNome(), cli.getCpf(), cli.getEndereco(),cli.getBairro()});
+            }
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        for (Cliente cliente1 : clientes) {
-            model.addRow(new Object[]{cliente1.getNome(), cliente1.getCpf(), cliente1.getEndereco()});
-        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbSexo;
     private javax.swing.JButton jBAlterar;
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JButton jBExcluir;
     private javax.swing.JButton jBSalvar;
     private javax.swing.JButton jBXCancelar;
     private javax.swing.JButton jButton11;
+    private javax.swing.JComboBox<String> jCBSexo;
     private javax.swing.JComboBox<String> jCBTermo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

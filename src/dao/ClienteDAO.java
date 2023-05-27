@@ -57,13 +57,14 @@ public class ClienteDAO {
 
     public List<Cliente> pesquisarClientes(String termo, String pesquisa) throws SQLException {
         Connection conexao = new Conexao().getConexao();
+        System.out.println(termo);
+        System.out.println(pesquisa);
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "select * from cliente where ? like ?";
+        String sql = "select * from cliente where "+termo+" like ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
-        ps.setString(1, termo);
-        ps.setString(2, "%" + pesquisa + "%");
+        ps.setString(1, "%" + pesquisa + "%");
         ResultSet result = ps.executeQuery();
-        Cliente cliente = null;
+        Cliente cliente ;
         while (result.next()) {
             cliente = new Cliente(result.getString("nome"),
                     result.getString("sexo"),
