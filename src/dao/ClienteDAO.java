@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import jdbc.Conexao;
 import modelo.Cliente;
 
@@ -54,12 +55,14 @@ public class ClienteDAO {
 
     }
 
-    public ArrayList<Cliente> listarClientes() throws SQLException {
-
+    public List<Cliente> pesquisarClientes(String termo, String pesquisa) throws SQLException {
+        
         Connection conexao = new Conexao().getConexao();
-        ArrayList<Cliente> clientes = new ArrayList<>();
-        String sql = "select * from cliente order by id";
+        List<Cliente> clientes = new ArrayList<>();
+        String sql = "select * from cliente where ? like ?";
         PreparedStatement ps = conexao.prepareStatement(sql);
+        ps.setString(1, termo);
+        ps.setString(2, "%" + pesquisa + "%");
         ResultSet result = ps.executeQuery();
         Cliente cliente = null;
         while (result.next()) {
