@@ -56,7 +56,6 @@ public class ClienteDAO {
     }
 
     public List<Cliente> pesquisarClientes(String termo, String pesquisa) throws SQLException {
-        
         Connection conexao = new Conexao().getConexao();
         List<Cliente> clientes = new ArrayList<>();
         String sql = "select * from cliente where ? like ?";

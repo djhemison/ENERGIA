@@ -275,7 +275,7 @@ public class ConsumoForm extends javax.swing.JFrame {
         jPanel1.add(jBCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 580, -1, 45));
 
         jCBTermo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBTermo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Prioridade", "Responsavel" }));
+        jCBTermo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Endereco", "Bairro" }));
         jPanel1.add(jCBTermo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 144, 40));
 
         jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -400,13 +400,13 @@ public class ConsumoForm extends javax.swing.JFrame {
         model.setNumRows(0);
         jTListaClientes.setModel(model);
         jTListaClientes.setDefaultEditor(Object.class, null);
-        List<Cliente> cliente = new ArrayList<>();
+        
         try {
-            cliente = clientedao.pesquisarClientes(termo.toLowerCase(),jTFPesquisa.getText());
+            clientes = clientedao.pesquisarClientes(termo.toLowerCase(),jTFPesquisa.getText());
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        for (Cliente cliente1 : cliente) {
+        for (Cliente cliente1 : clientes) {
             model.addRow(new Object[]{cliente1.getNome(), cliente1.getCpf(), cliente1.getEndereco()});
         }
     }
